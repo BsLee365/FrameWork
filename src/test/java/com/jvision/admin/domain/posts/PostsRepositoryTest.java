@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
+
 import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,7 +32,7 @@ public class PostsRepositoryTest {
                 .author("이범석")
                 .build());
 
-        List <Posts> postsList =  postsRepository.findAll(); //모두 가져왐
+        List<Posts> postsList =  postsRepository.findAll(); //모두 가져왐
         Posts posts = postsList.get(0); //첫 번째 레코드 가져옴.
         assertThat(posts.getTitle()).isEqualTo(title); //title하고 같은지 테스트
         assertThat(posts.getContent()).isEqualTo(content); //content하고 같은지 확인
