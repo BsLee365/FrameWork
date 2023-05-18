@@ -1,12 +1,12 @@
 package com.jvision.admin.web;
 
 import com.jvision.admin.service.posts.PostsService;
+import com.jvision.admin.web.dto.PostsResponseDto;
 import com.jvision.admin.web.dto.PostsSaveRequestDto;
+import com.jvision.admin.web.dto.PostsUpdateRequestDto;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,5 +21,17 @@ public class PostsApiController {
     public long save(@RequestBody PostsSaveRequestDto requestDto){
 
         return postsService.save(requestDto);
+    }
+
+    //수정에 해당하는 부분
+    @PutMapping("api/vi/posts/{id}")
+    public long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto){
+        return postsService.update(id, requestDto);
+    }
+
+    //조회에 해당하는 부분
+    @GetMapping("/api/vi/posts/{id}")
+    public PostsResponseDto findById(@PathVariable Long id){
+        return postsService.findById(id);
     }
 }

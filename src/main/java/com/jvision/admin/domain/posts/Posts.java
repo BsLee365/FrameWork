@@ -30,4 +30,10 @@ public class Posts {
         this.content = content;
         this.author = author;
     }
+
+    //더티 체킹
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 }
