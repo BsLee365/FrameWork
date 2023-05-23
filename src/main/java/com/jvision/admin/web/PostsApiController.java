@@ -26,12 +26,22 @@ public class PostsApiController {
     //수정에 해당하는 부분
     @PutMapping("api/vi/posts/{id}")
     public long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto){
+
         return postsService.update(id, requestDto);
     }
 
     //조회에 해당하는 부분
     @GetMapping("/api/vi/posts/{id}")
     public PostsResponseDto findById(@PathVariable Long id){
+
         return postsService.findById(id);
     }
+
+    //삭제에 해당하는 부분
+    @DeleteMapping("/api/vi/posts/{id}")
+    public Long delete(@PathVariable Long id){
+        postsService.delete(id);
+        return id;
+    }
+
 }

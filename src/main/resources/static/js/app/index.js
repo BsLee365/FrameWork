@@ -30,6 +30,46 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         })
+    },
+
+    //update함수
+    update : function () {
+        var data = {
+            title : $("#title").val(),
+            content: $("#content").val()
+        };
+
+        var id = $("#id").val();
+
+        $.ajax({
+            type : 'PUT',
+            url : '/api/vi/posts/'+id,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data : JSON.stringify(data)
+        }).done(function () {
+            alert('글이 수정되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        })
+    },
+
+    //delete 함수
+    delete : function (){
+        var id = $("#id").val();
+
+        $.ajax({
+            type : 'DELETE',
+            url : '/api/vi/posts/'+id,
+            dataType : 'json',
+            contentType : 'application/jsonl charset=utf-8',
+        }).done(function (){
+            alert('글이 삭제되었습니다.');
+            window.location.href = '/'
+        }).fail(function (error){
+            alert(JSON.stringify(error))
+        });
     }
 };
 
