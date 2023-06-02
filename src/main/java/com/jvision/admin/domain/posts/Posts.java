@@ -16,10 +16,10 @@ public class Posts {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
-    @Column(length = 500, nullable = false)
+    @Column(length = 500, nullable = false) //varchar2
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false) //텍스트 형식으로 저장
     private String content;
 
     private String author;

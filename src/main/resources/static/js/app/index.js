@@ -5,6 +5,7 @@ var main = {
             _this.save();
         });
         $('#btn-update').on('click', function () {
+
             _this.update();
         });
         $('#btn-delete').on('click', function () {
@@ -63,7 +64,7 @@ var main = {
             type : 'DELETE',
             url : '/api/vi/posts/'+id,
             dataType : 'json',
-            contentType : 'application/jsonl charset=utf-8',
+            contentType : 'application/json charset=utf-8',
         }).done(function (){
             alert('글이 삭제되었습니다.');
             window.location.href = '/'
