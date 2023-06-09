@@ -3,7 +3,7 @@ package com.jvision.admin.config.auth;
 import com.jvision.admin.config.auth.dto.OAuthAttributes;
 import com.jvision.admin.config.auth.dto.SessionUser;
 import com.jvision.admin.domain.user.Users;
-import com.jvision.admin.domain.user.UserRepository;
+import com.jvision.admin.domain.user.UsersRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +21,7 @@ import java.util.Collections;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User>{
 
-    private final UserRepository userRepository;
+    private final UsersRepository usersRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -37,7 +37,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         Users users = saveOrUpdate(attributes);
 
-        httpSession.setAttribute("user", new SessionUser(users));
+        httpSession.setAttribute("users", new SessionUser(users));
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(users.getRolekey())),
                 attributes.getAttributes(),
@@ -45,10 +45,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private Users saveOrUpdate(OAuthAttributes attributes){
-        Users users = userRepository.findByEmail(attributes.getEmail())
+        Users users = usersRepository.findByEmail(attributes.getEmail())
                 .map(entity->entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
 
-        return userRepository.save(users);
+        return usersRepository.save(users);
     }
 }

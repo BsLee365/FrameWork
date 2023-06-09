@@ -1,11 +1,13 @@
 package com.jvision.admin.config.auth;
 
+import com.jvision.admin.domain.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+
 
 @RequiredArgsConstructor
 @Configuration
@@ -20,9 +22,10 @@ public class SecurityConfig {
                 .csrf().disable()
                 .headers().frameOptions().disable()
                 .and()
-                .authorizeHttpRequests()
-                .anyRequest().authenticated()
-                .and()
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/","/css/**","/images/**","/js/**","/h2-console/**").permitAll()
+                        .requestMatchers("/api/vi/**").hasAnyRole(Role.USER.name())
+                        .anyRequest().authenticated())
                 .logout()
                 .logoutSuccessUrl("/")
                 .and()
