@@ -29,10 +29,14 @@ public class OAuthAttributes {
         if("naver".equals(registrationId))
             return ofNaver("id", attributes);
 
+        //카카오 로그인
+        else if ("kakao".equals(registrationId)) {
+            return ofKakao("id", attributes);
+        }
 
         return ofGoogle(userNameAttributeName, attributes);
     }
-
+    //네이버 계정에서 가져올 정보
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes)
     {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
@@ -44,12 +48,25 @@ public class OAuthAttributes {
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
-
+    //구글 계정에서 가져올 정보
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes){
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .picture((String) attributes.get("picture"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+    //카카오 계정에서 가져올 정보
+    private  static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes){
+        Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
+        Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
+
+        return OAuthAttributes.builder()
+                .name((String) kakaoProfile.get("nickname"))
+                .email((String) kakaoAccount.get("email"))
+                .picture((String) kakaoProfile.get("profile_image_url"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
